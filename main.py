@@ -93,7 +93,7 @@ class DataBaseInteraction:
                 up_down = 0.0
             return up_down
 
-        todays_date = datetime.today().strftime("%Y-%m-%d")
+        todays_date = datetime.today().strftime("%Y-%m-%d %H:%M:%S")
         for k, v in data.items():
             print(f"{k} {v}")
             stock_name = v["Name"]
@@ -115,7 +115,7 @@ class DataBaseInteraction:
         try:
             self.cursor.execute(f'''CREATE TABLE {self.stock_changes_table_name} 
                                     (Date text, Symbol text, UpDown int, Change real, 
-                                    PRIMARY KEY (Date Symbol UpDown Change) ON CONFLICT IGNORE)''')
+                                    PRIMARY KEY (Date, Symbol, UpDown, Change) ON CONFLICT IGNORE)''')
         except sqlite3.OperationalError as err:
             print(err)
         
